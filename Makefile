@@ -1,11 +1,14 @@
 all:thesis.pdf
 
-%.pdf:%.tex
+%.toc:%.tex
+	xelatex $<;
+	
+%.pdf:%.tex %.toc
 	if xelatex $<; then $(MAKE) cleantemp; else $(MAKE) clean; fi
 
 .PHONY:cleantemp
 cleantemp:
-	rm -f *.aux *.log *.out
+	rm -f *.aux *.log *.out *.toc
 
 clean:cleantemp
 	rm -f *.pdf
