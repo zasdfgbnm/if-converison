@@ -1,7 +1,7 @@
 all:thesis.pdf
 
 %.pdf:%.tex
-	if pdflatex $<; then $(MAKE) cleantemp; else $(MAKE) clean; fi
+	if xelatex $<; then $(MAKE) cleantemp; else $(MAKE) clean; fi
 
 .PHONY:cleantemp
 cleantemp:
