@@ -34,12 +34,27 @@
 \maketitle
 
 \begin{abstract}
-这是摘要你懂吗，这是摘要你懂吗，这是摘要你懂吗，这是摘要你懂吗，
-这是摘要你懂吗，这是摘要你懂吗，这是摘要你懂吗，这是摘要你懂吗，
-这是摘要你懂吗，这是摘要你懂吗，这是摘要你懂吗，这是摘要你懂吗，
-这是摘要你懂吗，这是摘要你懂吗，这是摘要你懂吗，这是摘要你懂吗，
-这是摘要你懂吗，这是摘要你懂吗，这是摘要你懂吗，这是摘要你懂吗，
-这是摘要你懂吗，这是摘要你懂吗，这是摘要你懂吗，这是摘要你懂吗。
+高性能的体系结构的发展对编译器对程序的优化提出了更高的要求。
+一个先进的编译器，必然会面临这样一个问题：何时可以调换指令的顺序而保持程序的含义不变。
+编译器在解决上述问题的时候，最常用的策略是基于依赖的。
+可以通过指令对相同存储单元的访问情况来定义数据依赖。
+然而，程序中往往存在分支语句，分支语句会使得依赖关系变得复杂。
+编译器如果没有意识到分支语句对依赖的影响，将会产生不正确的代码。
+对分支语句，有两种处理方法，第一种是if转换（if-conversion），另一种是引入新的依赖类型——控制依赖。
+if转换把程序中的分支语句转换为条件执行语句，从而将全部的分支语句删除，因此能够起到把控制对依赖的影响转换成数据依赖的作用。
+而控制依赖则要求编译器在做代码变换的时候，除了要保持数据依赖以外，还要保持控制依赖，从而限制可以进行的变换来保证程序的正确性。
+本文是一篇综述性质的文章，包含了对if转换的研究近况的调研，以及这些研究成果在LLVM中的实现情况。
+
+The development of high performance architectures has made it harder to design an efficient complier.
+There is one question in common that every state-of-the-art compilers face: when the order of two instructions can be exchanged without changing the meaning of the program.
+To solve this question, most compilers adopt strategies based on dependency.
+Data dependence can be defined by considering the access to the same memory location.
+However, most programs contain branchings, which makes the dependence complicated.
+Compilers would generate wrong codes if the branchings were not handled appropriately.
+There are two ways to handle branchings: if-conversion and the introduction of control dependence.
+If-conversion eliminates all the branchings in the program by replacing statements with guarded statements, therefore, converts control dependence to data dependence.
+The introduction of control dependence prevents  compilers from generating incorrect codes by demanding the compilers to keep the order of statements with control dependence.
+This article is a review of recent researches on if-conversion and their implementation on LLVM.
 \end{abstract}
 
 \newpage
