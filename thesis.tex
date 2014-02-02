@@ -12,13 +12,21 @@
 \XeTeXlinebreaklocale "zh"
 \XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
 
+%title and author
+\def\mytitle{if-conversion研究近况及其在LLVM上的实现}
+\def\myauthor{高翔}
+\title{\mytitle}
+\author{\myauthor}
+
 %hyperref
 \usepackage{hyperref}
+\hypersetup{
+ pdftitle={\mytitle},
+ pdfauthor={\myauthor},
+ pdfsubject={if-conversion},
+ pdfkeywords={if-conversion, 分支消除, 编译器}
+}
 
-
-%title and author
-\title{if-conversion研究近况及其在LLVM上的实现}
-\author{高翔}
 
 %document begins here
 \begin{document}
