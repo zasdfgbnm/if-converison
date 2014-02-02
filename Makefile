@@ -5,8 +5,7 @@ all:thesis.pdf
 
 .PHONY:cleantemp
 cleantemp:
-	rm -f *.aux
-	rm -f *.log
+	rm -f *.aux *.log *.out
 
 clean:cleantemp
 	rm -f *.pdf
