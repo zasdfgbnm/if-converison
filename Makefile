@@ -1,11 +1,11 @@
 .PHONY:all
 all:thesis.pdf
 
-%.pdf:%.tex
-	xelatex $(basename $@ .pdf)
-	bibtex  $(basename $@ .pdf)
-	xelatex $(basename $@ .pdf)
-	xelatex $(basename $@ .pdf)
+thesis.pdf:*.tex
+	xelatex thesis
+	bibtex  thesis
+	xelatex thesis
+	xelatex thesis
 	$(MAKE) cleantemp
 
 .PHONY:cleantemp
