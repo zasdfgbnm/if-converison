@@ -51,16 +51,16 @@
   x-fetchedfrom = {Bibsonomy}
 }
 
-@OTHER{1991,
+@ARTICLE{1991,
+  author = {M. Butler, T. Yeh, Y. Patt, M. Alsup, H. Scales, M.Shebanow},
   title = {Single instruction stream parallelism is greater than two},
   year = {1991},
+  pages = {276--286},
   __markedentry = {[bnm:6]},
-  author = {M. Butler, T. Yeh, Y. Patt, M. Alsup, H. Scales, M.Shebanow},
   booktitle = {Computer Architecture, 1991. The 18th Annual International Symposium
 	on},
   doi = {10.1109/ISCA.1991.1021620},
   owner = {bnm},
-  pages = {276--286},
   timestamp = {2014.02.25},
   url = {http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=1021620}
 }
