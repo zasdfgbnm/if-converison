@@ -1,0 +1,40 @@
+\newcommand\showchange{TT}%{TT FL}%
+\newcommand\hasalgo{FL}%{TT FL}%
+%\documentclass[preprint]{../../share/sigplanconf}
+\documentclass[a4paper]{article}
+
+\input local    % common local setting
+\input clocal   % common Chinese settinig
+\usepackage{pdflscape} % 为了横置表格
+
+\begin{document}
+
+\title{调研笔记}
+%\subtitle{(Simplified Version)}
+%\authorinfo{Yu Zhang}
+\author{张昱\\clarazhang@gmail.com}
+%{School of Computer Science and Technology, University of Science and Technology of China, Hefei, Anhui 230026, China\\ Software Security Lab., Suzhou Institute for Advanced Study, University of Science and Technology of China, \\ Suzhou, Jiangsu 215123, China\\yuzhang@ustc.edu.cn}
+
+\maketitle
+\tableofcontents
+\setcounter{tocdepth}{3}
+\newpage
+
+% turn on page numbers
+%\pagestyle{empty}
+\pagenumbering{arabic}
+\input perf
+\input bigdata
+\input dfs
+\input graph
+\input streamcomp
+\input ppm
+\input streampm
+\input stream/brook
+
+\begin{small}
+\bibliography{pa,cn}
+\bibliographystyle{plain}
+\end{small}
+
+\end{document}
