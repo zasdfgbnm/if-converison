@@ -1,3 +1,5 @@
-\contentsline {section}{\numberline {1}简介}{1}{section.1}
+\contentsline {section}{\numberline {1}分支语句与程序性能的关系}{1}{section.1}
 \contentsline {subsection}{\numberline {1.1}分支语句对性能的影响}{1}{subsection.1.1}
-\contentsline {subsection}{\numberline {1.2}if-conversion的发展简史}{1}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.2}分支消除与性能}{1}{subsection.1.2}
+\contentsline {section}{\numberline {2}if-conversion的发展简史}{2}{section.2}
+\contentsline {section}{\numberline {3}待办事项}{2}{section.3}
