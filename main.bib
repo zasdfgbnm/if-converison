@@ -1,5 +1,18 @@
 % This file was created with JabRef 2.9.2.
-% Encoding: GBK
+% Encoding: UTF8
+
+@INPROCEEDINGS{Hsu1986,
+  author = {Peter Y.-T. Hsu and Edward S. Davidson},
+  title = {Highly Concurrent Scalar Processing},
+  booktitle = {ISCA},
+  year = {1986},
+  pages = {386-395},
+  bibsource = {DBLP, http://dblp.uni-trier.de},
+  crossref = {DBLP:conf/isca/1986},
+  ee = {http://doi.acm.org/10.1145/17407.17401},
+  owner = {bnm},
+  timestamp = {2014.02.26}
+}
 
 @INPROCEEDINGS{allen1983Concondeptodatdep,
   author = {Allen, John R and Kennedy, Ken and Porterfield, Carrie and Warren,
@@ -51,10 +64,32 @@
   x-fetchedfrom = {Bibsonomy}
 }
 
+@OTHER{JosephC.H.Park1991,
+  abstract = {this paper, however. We have not bothered to include such complications
+	in Algorithm DU},
+  author = {Joseph C. H. Park, Mike Schlansker},
+  owner = {bnm},
+  timestamp = {2014.02.26},
+  title = {On Predicated Execution},
+  year = {1991}
+}
+
+@OTHER{JosephP.Brutt,
+  abstract = {The CydraTM 5 architecture adds unique support for overlapping successive
+	iterations of a loop to a very long instruction word (VLIW) base.
+	This architecture allows highly parallel loop execution for a much
+	larger class of loops than can be vectorixed, without requiring the
+	unrolling of loops usually used by compilers for VLlW machines. This
+	paper discusses the Cydra 5 loop scheduling model, the special architectural
+	features which support it, and the loop compilation techniques used
+	to take full advantage of the architecture. 1.},
+  author = {Joseph P. Brutt, Ardent Computer Ttt},
+  owner = {bnm},
+  timestamp = {2014.02.26},
+  title = {Overlapped Loop Support in the Cydra 5}
+}
+
 @OTHER{1991,
-  title = {Single instruction stream parallelism is greater than two},
-  year = {1991},
-  __markedentry = {[bnm:6]},
   author = {M. Butler, T. Yeh, Y. Patt, M. Alsup, H. Scales, M.Shebanow},
   booktitle = {Computer Architecture, 1991. The 18th Annual International Symposium
 	on},
@@ -62,7 +97,9 @@
   owner = {bnm},
   pages = {276--286},
   timestamp = {2014.02.25},
-  url = {http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=1021620}
+  title = {Single instruction stream parallelism is greater than two},
+  url = {http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=1021620},
+  year = {1991}
 }
 
 @OTHER{Mahlke1994,
@@ -86,6 +123,101 @@
   year = {1994}
 }
 
+@OTHER{Quinones2006,
+  __markedentry = {[bnm:]},
+  abstract = {If-conversion transforms control dependencies to data dependencies
+	by using a predication mechanism. It is useful to eliminate hard-to-predict
+	branches and to reduce the severe performance impact of branch mispredictions.
+	However, the use of predicated execution in out-of-order processors
+	has to deal with two problems: there can be multiple definitions
+	for a single destination register at rename time, and instructions
+	with a false predicated consume unnecessary resources. Predicting
+	predicates is an effective approach to address both problems. However,
+	predicting predicates that come from hard-to-predict branches is
+	not beneficial in general, because this approach reverses the if-conversion
+	transformation, loosing its potential benefits. In this paper we
+	propose a new scheme that dynamically selects which predicates are
+	worthy to be predicted, and which one are more effective in its if-converted
+	form. We show that our approach significantly outperforms previous
+	proposed schemes. Moreover it performs within 5 % of an ideal scheme
+	with perfect predicate prediction.},
+  author = {Quiñones, Eduardo},
+  owner = {bnm},
+  timestamp = {2014.02.26},
+  title = {Selective predicate prediction for out-of-order processors},
+  year = {2006}
+}
+
+@OTHER{Quinones2007,
+  __markedentry = {[bnm:6]},
+  abstract = {If-conversion is a compiler technique that reduces the misprediction
+	penalties caused by hard-to-predict branches, transforming control
+	dependencies into data dependencies. Although it is globally beneficial,
+	it has a negative side-effect because the removal of branches eliminates
+	useful correlation information necessary for conventional branch
+	predictors. The remaining branches may become harder to predict.
+	However, in predicated ISAs with a compare-branch model, the correlation
+	information not only resides in branches, but also in compare instructions
+	that compute their guarding predicates. When a branch is removed,
+	its correlation information is still available in its compare instruction.
+	We propose a branch prediction scheme based on predicate prediction.
+	It has three advantages: First, since the prediction is not done
+	on a branch basis but on a predicate define basis, branch removal
+	after if-conversion does not lose any correlation information, so
+	accuracy is not degraded. Second, the mechanism we propose permits
+	using the computed value of the branch predicate when available,
+	instead of the predicted value, thus effectively achieving 100 %
+	accuracy on such early-resolved branches. Third, as shown in previous
+	work, the selective predicate prediction is a very effective technique
+	to implement if-conversion on outof-order processors, since it avoids
+	the problem of multiple register definitions and reduces the unnecessary
+	resource consumption of nullified instructions. Hence, our approach
+	enables a very efficient implementation of if-conversion for an out-of-order
+	processor, with almost no additional hard-},
+  author = {Quiñones, Eduardo and Departament D’arquitectura De Computadors and
+	González, Antonio and Joan-manuel Parcerisa},
+  owner = {bnm},
+  timestamp = {2014.02.26},
+  title = {Improving branch prediction and predicate execution in out-of-order
+	processors},
+  year = {2007}
+}
+
+@ARTICLE{1989a,
+  author = {B. R. Rau and D. W. L. Yen and W. Yen and J. P. Bratt},
+  title = {The Cydra 5 departmental supercomputer: design philosophies, decisions,
+	and trade-offs},
+  journal = {Computer},
+  year = {1989},
+  volume = {22},
+  pages = {12--35},
+  number = {1},
+  doi = {10.1109/2.19820},
+  owner = {bnm},
+  timestamp = {2014.02.26},
+  url = {http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=19820}
+}
+
+@OTHER{ScottA.Mahlke1992,
+  abstract = {Predicated execution is an effective technique for dealing with conditional
+	branches in application programs. However, there are several problems
+	associated with conventional compiler support for predicated execution.
+	First, all paths of control are combined into a single path regardless
+	of their execution frequency and size with conventional if-conversion
+	techniques. Second, speculative execution is difficult to combine
+	with predicated execution. In this paper, we propose the use of a
+	new structure, referred to as the hyperblock, to overcome these problems.
+	The hyperblock is an efficient structure to utilize predicated execution
+	for both compile-time optimization and scheduling. Preliminary experimental
+	results show that the hyperblock is highly effective for a wide range
+	of superscalar and VLIW processors. },
+  author = {Scott A. Mahlke, et al.},
+  owner = {bnm},
+  timestamp = {2014.02.26},
+  title = { Effective Compiler Support for Predicated Execution Using the Hyperblock},
+  year = {1992}
+}
+
 @OTHER{Smith1989,
   abstract = {This paper demonstrates that highly-optimized, non-scientific applications
 	also contain ample instruction-level concurrency to sustain an execution
@@ -97,6 +229,23 @@
   timestamp = {2014.02.25},
   title = {Limits on Multiple Instruction Issue},
   year = {1989}
+}
+
+@ARTICLE{Tian2010,
+  author = {Tian, Zuwei and Sun, Guang},
+  title = {An If-Conversion Algorithm Based on Predication Execution},
+  journal = {Information Technology Journal},
+  year = {2010},
+  volume = {9},
+  pages = {984-988},
+  number = {5},
+  month = {May},
+  doi = {10.3923/itj.2010.984.988},
+  issn = {1812-5638},
+  owner = {bnm},
+  publisher = {Science Alert},
+  timestamp = {2014.02.26},
+  url = {http://dx.doi.org/10.3923/itj.2010.984.988}
 }
 
 @OTHER{Wall1991,
