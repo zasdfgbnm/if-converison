@@ -27,6 +27,32 @@
   x-fetchedfrom = {Google Scholar}
 }
 
+@OTHER{August1997,
+  __markedentry = {[bnm:6]},
+  abstract = {Predicated execution is a promising architectural feature for exploiting
+	instruction-level parallelism in the presence of control flow. Compiling
+	for predicated execution involves converting program control flow
+	into conditional, or predicated, instructions. This process is known
+	as if-conversion. In order to effectively apply if-conversion, one
+	must address two major issues: what should be if-converted and when
+	the if-conversion should be applied. A compiler&#039;s use of predication
+	as a representation is most effective when large amounts of code
+	are if-converted and if-conversion is performed early in the compilation
+	procedure. On the other hand, the final code generated for a processor
+	with predicated execution requires a delicate balance between control
+	flow and predication to achieve efficient execution. The appropriate
+	balance is tightly coupled with scheduling decisions and detailed
+	processor characteristics. This paper presents an effective compilation
+	framework that allows the compiler to maximize the benefits of predication
+	as a compiler representation while delaying the final balancing of
+	control flow and predication to schedule time.},
+  author = {David I. August and Wen-mei W. Hwu and Scott A. Mahlke},
+  owner = {bnm},
+  timestamp = {2014.02.28},
+  title = {A Framework for Balancing Control Flow and Predication},
+  year = {1997}
+}
+
 @INPROCEEDINGS{bringmann1993Speexeexcrecusiwrisup,
   author = {Bringmann, Roger A. and Mahlke, Scott A. and Hank, Richard E. and
 	Gyllenhaal, John C. and mei W. Hwu, Wen},
@@ -148,7 +174,6 @@
 }
 
 @OTHER{Quinones2007,
-  __markedentry = {[bnm:]},
   abstract = {If-conversion is a compiler technique that reduces the misprediction
 	penalties caused by hard-to-predict branches, transforming control
 	dependencies into data dependencies. Although it is globally beneficial,
@@ -218,7 +243,6 @@
 }
 
 @OTHER{ScottA.Mahlke1992a,
-  __markedentry = {[bnm:6]},
   abstract = {Predicated execution is an effective technique for dealing with conditional
 	branches in application programs. However, there are several problems
 	associated with conventional compiler support for predicated execution.
@@ -234,7 +258,7 @@
   author = {Scott A. Mahlke, et al.},
   owner = {bnm},
   timestamp = {2014.02.27},
-  title = {  Effective Compiler Support for Predicated Execution Using the Hyperblock},
+  title = { Effective Compiler Support for Predicated Execution Using the Hyperblock},
   year = {1992}
 }
 
@@ -279,5 +303,30 @@
   timestamp = {2014.02.25},
   title = {Limits of instruction-level parallelism},
   year = {1991}
+}
+
+@OTHER{Warter1993,
+  __markedentry = {[bnm:]},
+  abstract = {In this paper we present a set of isomorphic control transformations
+	that allow the compiler to apply local scheduling techniques to acyclic
+	subgraphs of the control flow graph. Thus, the code motion complexities
+	of global scheduling are eliminated. This approach relies on a new
+	technique, Reverse If-Conversion (RIC), that transforms scheduled
+	If-Converted code back to the control flow graph representation.
+	This paper presents the predicate internal representation, the algorithms
+	for RIC, and the correctness of RIC. In addition, the scheduling
+	issues are addressed and an application to software pipelining is
+	presented. 1 Introduction  Compilers for processors with instruction
+	level parallelism hardware need a large pool of operations to schedule
+	from. In processors without support for conditional execution, branches
+	present a scheduling barrier that limits the pool of operations to
+	the basic block. Since basic blocks tend to have only a few operations,
+	global scheduling techniques are ...},
+  author = {Nancy J. Warter and Scott A. Mahlke and Wen-mei W. Hwu and B. Ramakrishna
+	Rau},
+  owner = {bnm},
+  timestamp = {2014.02.28},
+  title = {Reverse If-Conversion},
+  year = {1993}
 }
 
