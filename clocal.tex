@@ -44,9 +44,11 @@
 \renewcommand\Authand{ \quad }
 %目录
 \renewcommand\contentsname{\hei{目 录}} 
-\if\hasalgo
-\floatname{algorithm}{\hei{算 法}} 
-\fi
+%\if\hasalgo
+%\floatname{algorithm}{\hei{算 法}} 
+%\fi
+\SetAlgorithmName{算法}{算法列表}
+
 \renewcommand\figurename{\hei{图}} 
 \renewcommand\tablename{\hei{表}} 
 \renewcommand{\refname}{\hei{参 考}}

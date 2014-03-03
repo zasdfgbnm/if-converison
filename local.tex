@@ -20,11 +20,17 @@
 \usepackage{authblk}
 
 %algorithm
-\if\hasalgo
-\usepackage{float}
-\usepackage{xspace}
-\usepackage{algorithmwh}
-\fi
+%\if\hasalgo
+%\usepackage{float}
+%\usepackage{xspace}
+%\usepackage{algorithmwh}
+%\fi
+\usepackage[linesnumbered,ruled]{algorithm2e}
+\SetAlFnt{\small}
+\SetAlCapFnt{\small}
+\SetAlCapNameFnt{\small}
+\SetAlCapHSkip{0pt}
+\IncMargin{-\parindent}
 
 \usepackage[all]{xy}             %various figures
 %\usepackage[amsmath,thmmarks]{ntheorem}%theorems
