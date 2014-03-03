@@ -1,6 +1,6 @@
 \section{if-conversion的运行机制}
 
-控制依赖的概念最早由Ferrante等人提出\cite{ferrante1987prodepgraitsuseopt}，后控制节点树的计算算法由Lengauer以及Tarjan给出\cite{Lengauer1979}，RK算法由Park跟Schlansker提出\cite{JosephC.H.Park1991}，Hyperblock的概念由Mahlke等人给出\cite{ScottA.Mahlke1992a}，逆向if-conversion则是Warter等人的研究成果\cite{Warter1993}。
+控制依赖的概念最早由Ferrante等人提出\cite{ferrante1987prodepgraitsuseopt}，RK算法由Park跟Schlansker提出\cite{JosephC.H.Park1991}，Hyperblock的概念由Mahlke等人给出\cite{ScottA.Mahlke1992a}，逆向if-conversion则是Warter等人的研究成果\cite{Warter1993}。
 
 \subsection{控制依赖}
 
@@ -9,8 +9,25 @@
 \end{definition}
 
 \begin{definition}[后控制(post-dominate)]
-如果在控制流图中，从V到STOP的每条路径(起始位置的V并不计算在路径中)都包含W，则称V被W后控制，或者W后控制V。
+设V与W是控制流图G中的节点，如果从V到STOP的每条路径(起始位置的V并不计算在路径中)都包含W，则称V被W后控制，或者W后控制V，记为$W \pdom V$。
 \end{definition}
+
+\begin{definition}[直接后控制(immediate post-dominate)]
+设X,Y以及Z是控制流图G中的节点，如果$Y\pdom X$，并且对于任意的满足$Z\pdom X$以及$Z\neq Y$的节点Z，都有$Z\pdom Y$，则称Y直接后控制X，或者X被Y直接后控制，记为$Y \ipdom X$
+\end{definition}
+
+\begin{definition}[pdom函数]
+设N是节点的集合，pdom是一个映射，它将N中的节点x映射为所有后控制x的节点的集合，即$pdom: N\to 2^N$。pdom的定义的数学表述为：$pdom\left(x\right):=\left\{y\in N: y \pdom x\right\}$
+\end{definition}
+
+\begin{definition}[ipdom函数]
+设N是节点的集合，ipdom是一个映射，它将N中的节点x映射为x直接后控制的节点的节点，即$pdom: N\to N$。ipdom的定义的数学表述为：$ipdom\left(x\right):=y\in N,\text{其中}y \ipdom x$
+\end{definition}
+
+\begin{definition}[后控制节点树]
+直接后控制关系构成一个树，称为后控制节点树。树的节点为控制流图G中的节点，若$y\ipdom x$,则y是x的双亲节点。显然，求$ipdom\left(x\right)$即为求x在树中的双亲节点，求$pdom\left(x\right)$即为求x在树中的所有祖先节点的集合。
+\end{definition}
+计算图G的后控制节点树的算法见\fref{app:algo_ipdom_tree}
 
 \begin{definition}[控制依赖(control dependent)]
 设G为控制流图，X以及Y是图中节点，称Y控制依赖于X当且仅当：
@@ -21,8 +38,9 @@
 \end{definition}
 从定义可以看出，如果Y控制依赖与X，则那么X必然有两个出口，其中一条出口导致Y必然被执行，另一条出口则导致Y可能不被执行。
 
-\subsubsection{后控制节点树的计算}
-后控制节点树的计算
+\begin{definition}[CD函数]
+设N是节点的集合，C是控制依赖的集合。CD函数是一个映射，它将N中的节点x映射为x的所有控制依赖的集合，即$CD:N\to 2^C$。若将C中的元素$c\in C$表示为$\pm y$，其中$+y$表示y的true边，$-y$表示y的false边，则CD函数的定义可以为：$CD\left(x\right):=\left\{\pm y:x\text{控制依赖于}\pm y\right\}$
+\end{definition}
 
 \subsection{RK算法}
 \subsection{Hyperblock}

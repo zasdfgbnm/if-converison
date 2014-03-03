@@ -17,7 +17,7 @@
 
 谓词执行的支持已经被非常广泛地应用在数值型程序以及非数值型程序的调度中\cite{ScottA.Mahlke1992}。对于数值型的代码，使用软件流水调度对多个循环迭代进行重叠执行可以在超标量以及VLIW机器上获得高性能\cite{1989a}\cite{JosephP.Brutt}。分支的移除使得软件流水线能够进行更紧凑的调度以及更简短的代码展开。对于非数值型的程序，谓词执行使得决定树调度在深流水以及多指令发射的处理器上获得更高的性能\cite{Hsu1986}。谓词执行允许多个控制路径上指令的并发执行，并且使指令在其依赖的分支被解析之前的执行成为可能。
 
-\subsection{分支消除对性能的影响}\label{ifcvt_harm_performance}
+\subsection{分支消除对性能的影响}\label{sec:ifcvt_harm_performance}
 
 虽然适当地应用if-conversion可以对性能进行提升，但是过多地进行if-conversion也会对性能造成不利的影响，并且不多地进行if-conversion也不一定改善性能。\cite{ScottA.Mahlke1992}\cite{Tian2010}。
 

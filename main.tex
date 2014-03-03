@@ -5,6 +5,7 @@
 
 \input local    % common local setting
 \input clocal   % common Chinese settinig
+\input def		%定义
 \usepackage{pdflscape} % 为了横置表格
 
 \begin{document}
@@ -35,6 +36,11 @@
 \item 关于分支以及谓词执行对性能的影响，不需要展开讨论，但是需要完善参考文献
 \end{enumerate}
 
+\begin{appendices}
+\input ipdom_tree_alg
+\end{appendices}
+
+\addcontentsline{toc}{section}{参考文献}
 \begin{small}
 \bibliography{main}
 \bibliographystyle{plain}

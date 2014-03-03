@@ -13,3 +13,5 @@
 \contentsline {subsection}{\numberline {4.2}August的基于逆向if-conversion的平衡算法}{5}{subsection.4.2}
 \contentsline {section}{\numberline {5}LLVM上if-conversion的实现}{5}{section.5}
 \contentsline {section}{\numberline {6}待办事项}{5}{section.6}
+\contentsline {section}{{\CJKfamily {HEI}附录} \numberline {A}后控制节点树的计算}{6}{{\CJKfamily {HEI}附录}.a.A}
+\contentsline {section}{参考文献}{6}{{\CJKfamily {HEI}附录}.a.A}
