@@ -1,38 +1,37 @@
-\section{Allen及其同事的开山之作}
+\section{Allen的工作}
 
-if转换最早由Rice大学的Allen等人于1983年提出\cite{allen1983Concondeptodatdep}，
-在当时，还没有处理控制依赖的好的方法，于是Allen提出了if转换来消除所有的控制依赖，
-程序进行if转换以后，所有的分支语句将会消失，程序中将会只有控制依赖。
+if-conversion最早由Rice大学的Allen等人于1983年提出\cite{allen1983Concondeptodatdep}，但是由于Allen的工作与后来的研究关联性不大，所以正文中对Allen的工作并没有叙述，现将Allen的工作在此附录中介绍一下。Allen的算法直接工作在Fortran源代码上，它将代码中的所有分支移除，进而为接下来的向量化做铺垫。
 
-\subsection{基本概念}
+Allen将Fortran中的语句分为如下几种类型：
+\begin{definition}[动作语句(action statements)]
+动作语句指的是能导致计算状态改变或者产生重要的副作用的语句，比如：赋值、读、写、函数调用。
+\end{definition}
 
-为了表述方便，Allen引入了一些基本概念：
-\begin{itemize}
-\item \textbf{动作语句(action statements)}
-能导致计算状态改变或者产生重要的副作用的语句，比如：赋值、读、写、函数调用。
-\item \textbf{分支语句(branch statements)}
-显式的引起控制转移的语句，比如：goto语句。注意的时函数调用不是分支语句而是动作语句，因为在给定的模块中，函数调用可以堪称宏操作。
-\item \textbf{迭代语句(iterative statements)}
-造成其他语句循环执行的语句，例如：do语句。
-\item \textbf{占位符语句(placeholder statements)}
-没有任何动作，只是用来占位的语句，例如：Fortran中的continue语句。
-\end{itemize}
+\begin{definition}[分支语句(branch statements)]
+分支语句指的是能够显式的引起控制转移的语句，比如：goto语句。注意函数调用不是分支语句而是动作语句，因为在给定的模块中，函数调用可以看成一个宏操作。
+\end{definition}
 
-if转换的目标是消除所有的分支语句，分支的消除会导致一些语句被替代为条件执行语句，这些条件执行语句的条件被称为\textbf{控制条件(guard)}:
+\begin{definition}[迭代语句(iterative statements)]
+迭代语句指的是能造成其他语句循环执行的语句，例如：do语句。
+\end{definition}
 
-\begin{itemize}
-\item \textbf{定义}：条件动作语句的\textbf{控制条件(guard)}是一个布尔表达式，这个表达式表示这条语句执行的条件，当且仅当布尔表达式为真时，这条语句的动作才会执行。
-\end{itemize}
+\begin{definition}[占位符语句(placeholder statements)]
+占位符语句指的是没有任何动作，只是用来占位的语句，例如：Fortran中的continue语句。
+\end{definition}
 
-本节中条件动作语句将用下列形式表示：
+if-conversion的目标是消除所有的分支语句，分支的消除会导致一些语句被替代为条件执行语句，这些谓词执行语句的条件被称为谓词(guard):
+
+\begin{definition}[谓词(guard)]：条件动作语句的谓词(guard)是一个布尔表达式，这个表达式表示这条语句执行的条件，当且仅当布尔表达式为真时，这条语句的动作才会执行。
+\end{definition}
+
+Fortran中条件动作语句形式如下：
 \begin{lstlisting}[language=FORTRAN]
 IF(guard) statement
 \end{lstlisting}
 
-分支分为3种类型：
-\begin{itemize}
-\item \textbf{出口分支(exit branch)}
-终止一个或者多个循环的分支，例如：
+Allen将分支分为如下3种类型：
+\begin{definition}[出口分支(exit branch)]
+出口分支指的是能终止一个或者多个循环的分支，例如：
 \begin{lstlisting}[language=FORTRAN]
 	DO 100 I=1,100
 		IF (ABS(A(I)-B(I)).LE. DEL) GOTO 200
@@ -40,38 +39,42 @@ IF(guard) statement
 	...
 200 CONTINUE
 \end{lstlisting}
-\item \textbf{前向分支(forward branch)}
-分支的跳转目标在当前语句之后但在相同的循环中的语句，例如：
+\end{definition}
+
+\begin{definition}[前向分支(forward branch)]
+前向分支指的是跳转目标在当前语句之后但在相同的循环中的语句，例如：
 \begin{lstlisting}[language=FORTRAN]
 	DO 100 I = 1, 10
 		IF (A(I).EQ.0.0) GOTO 100
 		B(I) = B(I)/A(I)
 100	CONTINUE
 \end{lstlisting}
-\item \textbf{后向分支(backward branch)}
-分支的跳转目标在当前语句之前但在相同的循环中的语句，例如：
+\end{definition}
+
+\begin{definition}[后向分支(backward branch)]
+后向分支指的是跳转目标在当前语句之前但在相同的循环中的语句，例如：
 \begin{lstlisting}[language=FORTRAN]
 10	I = I + 1
 	A(I) = A(I) + B(I)
 	IF (I .LE. 100) GOTO 10
 \end{lstlisting}
-\end{itemize}
+\end{definition}
 
-if转换使用如下两种变换来消除程序中的分支：
-
-\begin{itemize}
+if-conversion使用如下两种变换来消除程序中的分支：
+\begin{enumerate}
 \item \textbf{分支重定位(branch relocation)}：将分支语句一层层移出循环，直至分支语句与其目标在嵌套在相同的循环中。该过程把所有的出口分支转换为前向或者后向分支。
-\item \textbf{分支移除(branch removal)}：将所有的前向分支移除，取而代之的是，计算每个指令的控制条件，并将动作语句用条件动作语句来代替。
-\end{itemize}
+\item \textbf{分支移除(branch removal)}：将所有的前向分支移除，取而代之的是，计算每个语句的谓词，并将动作语句用条件动作语句来代替。
+\end{enumerate}
 
-\subsection{出口分支的处理}
+在分支重定位算法中，Allen引入了\textbf{出口标记(exit flag)}的概念：
 
-为了执行分支重定位，引入\textbf{出口标记(exit flag)}的概念：
-\begin{itemize}
-\item \textbf{出口标记(exit flag)}是一个布尔变量，每一个出口分支都有与其对应的一个出口标记。
+\begin{definition}[出口标记(exit flag)]
+出口标记是一个布尔变量，每一个出口分支都有与其对应的一个出口标记。
 在程序执行的过程中，该变量在其对应分支被执行之前的值始终为真，而在对应分支被执行以后其值变为假。
-在这里，出口分支i的出口标记记为$ex_i$，与其对应的FORTRAN变量名记为EXi
-\end{itemize}
+在这里，出口分支i的出口标记记为$ex_i$，与其对应的Fortran变量名记为EXi
+\end{definition}
+
+在上面的定义中出现了两个容易混淆的概念，出口标记$ex_i$及其对应的Fortran变量EXi。这两个概念的区别是，小写字母$ex_i$是算法以及行文中出现的变量，为了更容易地写出算法，也为了行文方便，在对小写字母的变量进行操作的时候并不会考虑布尔表达式的求值效率。但是一旦要进行程序生成，布尔表达式的效率就变得尤为重要，因为复杂的布尔表达式会使生成的程序运行缓慢，于是对小写字母变量进行的操作，在真正被转化为代码的时候，必须进行布尔化简以后才能写进程序。为了区别，经过布尔化简以后的版本中的变量（也就是最终写进程序中的变量），用大写字母EXi表示。类似的表示方法在后文中还会经常出现。
 
 在只有一个循环、一个出口分支的情况下，例如：
 \begin{lstlisting}[language=FORTRAN]
@@ -139,10 +142,10 @@ if转换使用如下两种变换来消除程序中的分支：
 	IF (.NOT. EX1) GOTO 300
 300	S6
 \end{lstlisting}
-该算法的伪代码如算法\ref{algo:RelocateBranch}所示:
+该算法的伪代码如\fref{alg:RelocateBranch}所示。
 
 \begin{algorithm}[H]
-	\label{algo:RelocateBranch}
+	\label{alg:RelocateBranch}
 	\caption{relocate\_branches(x)}
 	\KwIn{x是一个DO循环}
 	\KwOut{不含出口分支的版本}
@@ -163,27 +166,26 @@ if转换使用如下两种变换来消除程序中的分支：
 	}
 \end{algorithm}
 
-\subsection{前向分支的处理}
-
 前向分支是最简单的分支，它的移除称为\textbf{前向分支移除(forward branch removal)}。为了进行前向分支移除，引入\textbf{当前条件(current condition)}概念：
 
-\begin{itemize}
-\item \textbf{当前条件(current condition)}是一个逻辑表达式，它表示现在正在处理的表达式被执行的条件。
-\end{itemize}
+\begin{definition}[当前条件(current condition)]
+当前条件是一个逻辑表达式，它表示现在正在处理的表达式被执行的条件。
+\end{definition}
 
 前向分支在两个地方影响控制流：
 
-\begin{itemize}
+\begin{enumerate}
 \item \textbf{分支处}：在没有其他控制流改变的情况下，前向分支之后紧跟的语句只有在分支没有发生的条件下才会被执行。
 所以，如果分支处的当前条件为$cc_1$，分支的条件$p$，那么紧跟分支之后的语句的控制条件为$cc_1\wedge \neg p$
 \item \textbf{目标处}：控制流到达分支目标处有两种情况，一种是分支语句没有执行，控制流直接顺序执行到达目标处，另一种则是通过分支语句直接到达目标处。
 如果目标前面的那条语句的控制条件是$cc_2$，则目标处的控制条件应该为$cc_2\vee \left(cc_1\wedge p\right)$
-\end{itemize}
+\end{enumerate}
 
 引入\textbf{分支标记(branch flags)}的概念：
-\begin{itemize}
-\item 每个前向分支(编号为i)对应于一个称为\textbf{分支标记(branch flags)}的变量$br_i$，$br_i$为真当且仅当对应分支语句的分支条件为真。
-\end{itemize}
+
+\begin{definition}[分支标记(branch flags)]
+每个前向分支(编号为i)对应于一个被称为分支标记(branch flags)的变量$br_i$，$br_i$为真当且仅当对应分支语句的分支条件为真。
+\end{definition}
 
 例如代码：
 
@@ -198,7 +200,7 @@ if转换使用如下两种变换来消除程序中的分支：
 100	CONTINUE 
 \end{lstlisting}
 
-为两个分支分别引入一个布尔变量$br_1$跟$br_2$，他们对应的FORTRAN变量分别为BR1和BR2。
+为两个分支分别引入一个布尔变量$br_1$跟$br_2$，他们对应的Fortran变量分别为BR1和BR2。
 为了计算BR1和BR2，我们分别在两个分支处插入代码:
 \begin{lstlisting}[language=FORTRAN]
 BR1 = A(I).GT.1O
@@ -222,7 +224,7 @@ BR2 = B(I).GT.1O
 \end{tabular}
 
 为了防止控制条件的不断增长，编译器必须具备布尔化简的能力，例如第七行对应的布尔表达式恒真。
-我们$\mu\left(p\right)$表示逻辑表达式$p$经过布尔化简以后转换成逻辑表达式的FORTRAN语句表示。
+我们用$\mu\left(p\right)$表示逻辑表达式$p$经过布尔化简以后转换成逻辑表达式的Fortran语句表示。
 经过前向分支消除以及布尔优化后的结果为：
 
 \begin{lstlisting}[language=FORTRAN]
@@ -235,10 +237,10 @@ BR2 = B(I).GT.1O
 		B(I) = A(I) + 5
 100	CONTINUE
 \end{lstlisting}
-前向分支消除的伪代码算法\ref{algo:ForwardConvert}如下：
+前向分支消除的伪代码如\ref{alg:ForwardConvert}所示。
 
 \begin{algorithm}[H]
-	\label{algo:ForwardConvert}
+	\label{alg:ForwardConvert}
 	\caption{$forward\_convert\left(x,cc_0\right)$}
 	\KwIn{x是要考虑的分支，$cc_0$是x前的控制条件}
 	\KwOut{返回x的控制条件，输出不含前向分支的版本}
@@ -267,10 +269,9 @@ BR2 = B(I).GT.1O
 	\Return{$cc_1$}
 \end{algorithm}
 
-\subsection{后向分支的处理}
-后向分支会产生隐式循环，因此无法被if转换消除。然而更严重的是，后向分支导致从循环外跳转到循环内成为可能，这就导致算法\ref{algo:ForwardConvert}产生不正确的代码。
-一种简单的做法是，保持隐式循环区内的所有代码不变，不对隐式循环区内的代码进行优化，然而这是一个非常严重的限制，我们必须考虑后向分支存在的情况下代码的优化。
-本节介绍完全分支移除算法\ref{algo:CompleteBranchRemoval}，这个算法可以在后向分支存在的前提下删除所有的前向分支。
+后向分支会产生隐式循环，因此无法被if-conversion消除。然而更严重的是，后向分支导致从循环外跳转到循环内成为可能，这就导致\ref{alg:ForwardConvert}产生不正确的代码。
+一种简单的做法是，保持隐式循环区内的所有代码不变，不对隐式循环区内的代码进行优化，然而这是一个非常严重的限制，因此必须考虑后向分支存在的情况下代码的优化。
+本节介绍完全分支移除算法\ref{alg:CompleteBranchRemoval}，这个算法可以在后向分支存在的前提下删除所有的前向分支。
 
 考虑下面这个例子：
 \begin{lstlisting}[language=FORTRAN]
@@ -338,10 +339,10 @@ y前面的语句执行完成以后，顺序执行到y，此时y的控制条件�
 		GOTO 100
 	ENDIF
 \end{lstlisting}
-由上面的分析，写出完全分支移除的算法如下：
+完全分支移除的算法如\fref{alg:CompleteBranchRemoval}所示。
 
 \begin{algorithm}[H]
-	\label{algo:CompleteBranchRemoval}
+	\label{alg:CompleteBranchRemoval}
 	\caption{$remove\_branches\left(x,cc_0\right)$}
 	\KwIn{x是要考虑的分支，$cc_0$是x前的控制条件}
 	\KwOut{返回x后面语句的控制条件$cc_1$，输出不含前向分支的版本}
@@ -382,10 +383,10 @@ y前面的语句执行完成以后，顺序执行到y，此时y的控制条件�
 	}
 	\Return{$cc_1$}
 \end{algorithm}
-其中的$process\_branch$如算法\ref{algo:ProcessBranch}所示:
+其中的$process\_branch$如\ref{alg:ProcessBranch}所示。
 
 \begin{algorithm}[H]
-	\label{algo:ProcessBranch}
+	\label{alg:ProcessBranch}
 	\caption{$process\_branch\left(x,y,br\right)$}
 	\KwIn{x是要考虑的分支,y是分支的目标，br是分支的条件}
 	$stmt\_guard\leftarrow true$\;
@@ -396,8 +397,3 @@ y前面的语句执行完成以后，顺序执行到y，此时y的控制条件�
 	}
 	$add\_to\_queue\left(predicate\_list\left(y\right),br\wedge stmt\_guard\right)$\;
 \end{algorithm}
-
-\subsection{布尔化简}
-
-if转换会引入非常长的布尔表达式，如果这些表达式不进行化简，就会导致严重的效率低下。
-（待完成）
