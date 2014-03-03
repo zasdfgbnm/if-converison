@@ -28,7 +28,7 @@
 }
 
 @OTHER{August1997,
-  __markedentry = {[bnm:6]},
+  __markedentry = {[bnm:]},
   abstract = {Predicated execution is a promising architectural feature for exploiting
 	instruction-level parallelism in the presence of control flow. Compiling
 	for predicated execution involves converting program control flow
@@ -113,6 +113,28 @@
   owner = {bnm},
   timestamp = {2014.02.26},
   title = {Overlapped Loop Support in the Cydra 5}
+}
+
+@OTHER{Lengauer1979,
+  __markedentry = {[bnm:6]},
+  abstract = {A fast algoritbm for finding dominators in a flowgraph is presented.
+	The algorithm uses depth-first search and an efficient method of
+	computing functions defined on paths in trees. A simple implemen-tation
+	of the algorithm runs in O(m log n) time, where m is the number of
+	edges and n is the number of vertices in the problem graph. A more
+	sophisticated implementation runs in O(ma(m, n)) time, where a(m,
+	n) is a functional inverse of Ackermann&#039;s function. Both versions
+	of the algorithm were implemented in Algol W, a Stanford University
+	version of Algol, and tested on an IBM 370/168. The programs were
+	compared with an implementation by Purdom and Moore of a straightforward
+	O(mn)-time algorithm, and with ~a bit vector algorithm described
+	by Aho and Ullman. The fast algorithm beat the straightforward algorithm
+	and the bit vector algorithm on all but the smallest graphs tested.},
+  author = {Lengauer, Thomas and Endre, Robert and Jan, Tar},
+  owner = {bnm},
+  timestamp = {2014.03.03},
+  title = {A fast algorithm for finding dominators in a flowgraph},
+  year = {1979}
 }
 
 @OTHER{1991,
@@ -306,7 +328,6 @@
 }
 
 @OTHER{Warter1993,
-  __markedentry = {[bnm:]},
   abstract = {In this paper we present a set of isomorphic control transformations
 	that allow the compiler to apply local scheduling techniques to acyclic
 	subgraphs of the control flow graph. Thus, the code motion complexities
@@ -316,7 +337,7 @@
 	This paper presents the predicate internal representation, the algorithms
 	for RIC, and the correctness of RIC. In addition, the scheduling
 	issues are addressed and an application to software pipelining is
-	presented. 1 Introduction  Compilers for processors with instruction
+	presented. 1 Introduction Compilers for processors with instruction
 	level parallelism hardware need a large pool of operations to schedule
 	from. In processors without support for conditional execution, branches
 	present a scheduling barrier that limits the pool of operations to
