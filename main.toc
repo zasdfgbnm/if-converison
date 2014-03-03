@@ -9,7 +9,7 @@
 \contentsline {subsection}{\numberline {3.3}Hyperblock}{6}{subsection.3.3}
 \contentsline {subsection}{\numberline {3.4}逆向if-conversion}{6}{subsection.3.4}
 \contentsline {section}{\numberline {4}if-conversion的执行策略}{6}{section.4}
-\contentsline {subsection}{\numberline {4.1}if-conversion带来的挑战}{6}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.1}if-conversion给编译器带来的挑战}{6}{subsection.4.1}
 \contentsline {subsection}{\numberline {4.2}August的基于逆向if-conversion的平衡算法}{6}{subsection.4.2}
 \contentsline {section}{\numberline {5}LLVM上if-conversion的实现}{6}{section.5}
 \contentsline {section}{{\CJKfamily {HEI}附录} \numberline {A}Allen的工作}{6}{{\CJKfamily {HEI}附录}.a.A}

@@ -41,6 +41,26 @@
 \begin{definition}[CD函数]
 设N是节点的集合，C是控制依赖的集合。CD函数是一个映射，它将N中的节点x映射为x的所有控制依赖的集合，即$CD:N\to 2^C$。若将C中的元素$c\in C$表示为$\pm y$，其中$+y$表示y的true边，$-y$表示y的false边，则CD函数的定义可以为：$CD\left(x\right):=\left\{\pm y:x\text{控制依赖于}\pm y\right\}$
 \end{definition}
+CD函数的计算算法如\fref{alg:ComputeCD}
+
+\begin{algorithm}[H]
+	\label{alg:ComputeCD}
+	\caption{ComputeCD(G)}
+	\KwIn{G是控制流图，N是G中节点的集合，E是G中边的集合}
+	\KwOut{CD函数}
+	引入一个新的边$\left[Start,Stop,false\right]$\;
+	计算函数$pdom\left(x\right)$以及$ipdom\left(x\right)$\;
+	\For{每个$\left[x,y,label\right]\in E$并且$y\notin pdom\left(x\right)$}{
+		Lub = ipdom(x)\;
+		\If{$\neg label$}{$x= -x$\;}
+		$t=y$\;
+		\While{$t\neq Lub$}{
+			$CD\left(t\right)=CD\left(t\right)\cup\left\{x\right\}$\;
+			$t=ipdom\left(t\right)$\;
+		}
+	}
+	移除$\left[Start,Stop,false\right]$\;
+\end{algorithm}
 
 \subsection{RK算法}
 \subsection{Hyperblock}
