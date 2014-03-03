@@ -19,6 +19,12 @@
 \usepackage{url}
 \usepackage{authblk}
 
+%fancyref
+\usepackage[plain]{fancyref}
+\newcommand*{\fancyrefapplabelprefix}{app}
+\newcommand*{\Frefappname}{Appendix}
+\frefformat{plain}{\fancyrefapplabelprefix}{\Frefappname\fancyrefdefaultspacing#1}
+
 %appendix
 \usepackage[page,title,titletoc,header]{appendix}
 
