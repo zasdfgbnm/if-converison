@@ -24,6 +24,9 @@
 \newcommand*{\fancyrefapplabelprefix}{app}
 \newcommand*{\Frefappname}{Appendix}
 \frefformat{plain}{\fancyrefapplabelprefix}{\Frefappname\fancyrefdefaultspacing#1}
+\newcommand*{\fancyrefalglabelprefix}{alg}
+\newcommand*{\Frefalgname}{Algorithm}
+\frefformat{plain}{\fancyrefalglabelprefix}{\Frefalgname\fancyrefdefaultspacing#1}
 
 %appendix
 \usepackage[page,title,titletoc,header]{appendix}
@@ -118,4 +121,21 @@
 
 % Conference abbreviations: \bibconf[Nth]{SOSP}{Symposium on ...}
 \newcommand{\bibconf}[3][]{#1 \bibbrev{#2}{#3 (#2)}}
+
+%代码相关
+\usepackage{listings} %插入代码
+\usepackage{xcolor} %代码高亮
+\lstset{
+	numbers=left, %设置行号位置
+	numberstyle=\tiny, %设置行号大小
+	keywordstyle=\color{blue}, %设置关键字颜色
+	commentstyle=\color[cmyk]{1,0,1,0}, %设置注释颜色
+	frame=single, %设置边框格式
+	escapeinside=``, %逃逸字符(1左面的键)，用于显示中文
+	breaklines, %自动折行
+	extendedchars=false, %解决代码跨页时，章节标题，页眉等汉字不显示的问题
+	xleftmargin=2em,xrightmargin=2em, aboveskip=1em, %设置边距
+	tabsize=4, %设置tab空格数
+	showspaces=false %不显示空格
+}
 
