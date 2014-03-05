@@ -48,7 +48,6 @@ CD函数的计算算法如\fref{alg:ComputeCD}
 	\caption{ComputeCD}
 	\KwIn{G是控制流图，N是G中节点的集合，E是G中边的集合}
 	\KwOut{CD函数}
-	引入一个新的边$\left[Start,Stop,false\right]$\;
 	计算函数$pdom\left(x\right)$以及$ipdom\left(x\right)$\;
 	\For{每个$\left[x,y,label\right]\in E$并且$y\notin pdom\left(x\right)$}{
 		Lub = ipdom(x)\;
@@ -59,7 +58,6 @@ CD函数的计算算法如\fref{alg:ComputeCD}
 			$t=ipdom\left(t\right)$\;
 		}
 	}
-	移除$\left[Start,Stop,false\right]$\;
 \end{algorithm}
 
 \subsection{RK算法}
@@ -82,13 +80,55 @@ CD函数并非是一个单值函数，不同的x可能对应相同的$CD\left(x\
 		}
 	}
 \end{algorithm}
-例如下面的流图：
-\xymatrix{
-U \ar@/_/[ddr]_y \ar@/^/[drr]^x
-\ar@{.>}[dr]|-{(x,y)} \\
-& X \times_Z Y \ar[d]^q \ar[r]_p
-& X \ar[d]_f \\
-& Y \ar[r]^g & Z }
+计算好R函数以及K函数，并按照R函数跟K函数进行谓词分配与定义以后，只要对控制流图进行拓扑排序即可得到转换后的代码。if-conversion的算法如\fref{alg:ifcvt}。
+
+\begin{algorithm}[H]
+	\label{alg:ifcvt}
+	\caption{If-Conversion}
+	\KwIn{G是控制流图，N是G中节点的集合，E是G中边的集合}
+	\KwOut{转换后的代码}
+	计算CD函数\;
+	计算RK函数\;
+	\For{$x\in N$}{
+		$p=R\left(x\right)$\;
+		\If{$K\left(p\right)\neq\varnothing$}{
+			给x分配谓词$p$\;
+		}
+	}
+	\For{每个谓词p}{
+		\For{$\pm y\in K\left(p\right)$}{
+			若是$+y$则在y尾部插入$p=t_y$\;
+			若是$-y$则在y尾部插入$p=\neg t_y$;
+		}
+	}
+	对G进行拓扑排序，删掉分支语句，并对已分配谓词的基本块进行谓词化\;
+\end{algorithm}
+
+%例如，如下控制流图:
+%举个例子说明一下
 
 \subsection{Hyperblock}
+
+\begin{definition}[Hyperblock]
+Hyperblock是一个谓词化的基本块的集合，这个集合只有一个入口，但是可以有多个出口。
+\end{definition}
+
+哪些基本块被包含在Hyperblock中，哪些不被包含在Hyperblock中，这个的选择比较自由，可以根据需要选择，比如说把不经常被执行的基本块，或者太过长的基本块排除在外，而把经常执行又短小精悍的基本块包含在内。
+自由选择的基本块不一定满足Hyperblock的定义，比如\fref{fig:taildup}以及\fref{fig:looppeeling}的(a)，这时候就需要对控制流图进行一定的处理，这样才能使选择的基本块能够构成一个Hyperblock。
+
+对不满足定义的基本块的集合处理的一种变换是\textbf{尾复制(Tail Duplication)}，另一种是\textbf{循环剥离(loop peeling)}。尾复制过程如\fref{fig:taildup}所示，图中(a)是分支选择的结果，(b)是尾复制以后的结果，(c)是if-conversion之后的结果。
+\begin{figure}
+\includegraphics[width=\linewidth]{hyperblock-td}
+\caption{\label{fig:taildup} 尾复制}
+\end{figure}
+
+循环剥离的过程如图\fref{fig:looppeeling}所示，图中(a)是分支选择的结果，(b)是循环剥离以后的结果。
+\begin{figure}
+\includegraphics[width=\linewidth]{hyperblock-lp}
+\caption{\label{fig:looppeeling} 循环剥离}
+\end{figure}
+
 \subsection{逆向if-conversion}
+
+逆向if-conversion能够将谓词化的语句重新转换成分支语句，其算法如下：
+\includegraphics[width=\linewidth]{RIC}
