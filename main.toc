@@ -7,11 +7,11 @@
 \contentsline {subsection}{\numberline {3.1}控制依赖}{4}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}RK算法}{5}{subsection.3.2}
 \contentsline {subsection}{\numberline {3.3}Hyperblock}{7}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}逆向if-conversion}{11}{subsection.3.4}
-\contentsline {section}{\numberline {4}if-conversion的执行策略}{12}{section.4}
-\contentsline {subsection}{\numberline {4.1}if-conversion给编译器带来的挑战}{12}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}August的基于逆向if-conversion的平衡算法}{12}{subsection.4.2}
-\contentsline {section}{\numberline {5}LLVM上if-conversion的实现}{12}{section.5}
-\contentsline {section}{{\CJKfamily {HEI}附录} \numberline {A}Allen的工作}{12}{{\CJKfamily {HEI}附录}.a.A}
-\contentsline {section}{{\CJKfamily {HEI}附录} \numberline {B}后控制节点树的计算}{20}{{\CJKfamily {HEI}附录}.a.B}
-\contentsline {section}{参考文献}{20}{{\CJKfamily {HEI}附录}.a.B}
+\contentsline {subsection}{\numberline {3.4}逆向if-conversion}{10}{subsection.3.4}
+\contentsline {section}{\numberline {4}if-conversion的执行策略}{11}{section.4}
+\contentsline {subsection}{\numberline {4.1}if-conversion给编译器带来的挑战}{11}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}August的基于逆向if-conversion的平衡算法}{11}{subsection.4.2}
+\contentsline {section}{\numberline {5}LLVM上if-conversion的实现}{11}{section.5}
+\contentsline {section}{{\CJKfamily {HEI}附录} \numberline {A}Allen的工作}{11}{{\CJKfamily {HEI}附录}.a.A}
+\contentsline {section}{{\CJKfamily {HEI}附录} \numberline {B}后控制节点树的计算}{21}{{\CJKfamily {HEI}附录}.a.B}
+\contentsline {section}{参考文献}{21}{{\CJKfamily {HEI}附录}.a.B}
