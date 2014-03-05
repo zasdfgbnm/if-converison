@@ -1,1 +1,26 @@
 \section{LLVM上if-conversion的实现}
+
+尽管if-conversion的研究成果丰硕，但是不幸的是这些成果并没有在LLVM中得到应用。在LLVM 3.4中，if-conversion的实现如下：
+
+LLVM中的if-conversion的实现非常简单，并没用所谓的RK算法，而是用的一个相当简单的算法。在lib\/CodeGen目录中有两个文件与if-conversion相关，一个是IfConversion.cpp，另一个是EarlyIfConversion.cpp。其中,前者作用于机器码，由AnalyzeBranch调用，后者则作用于SSA格式的IR，这是给乱序处理器(out-of-order processor)使用，乱序处理器的谓词执行能力比较弱。LLVM中if-conversion的机制很简单，它只考虑结构化编程，则分支可以解成三种类型：简单分支，三角分支，菱形分支。三种分支的控制流图分别如下所示:
+
+\begin{tabular}{|c|c|c|}
+\hline
+菱形分支 & 三角形分支 & 简单分支\\
+{\xymatrix{
+&A\ar[ld]_-{T}\ar[rd]^{F}&\\
+B\ar[rd]& &C\ar[ld]\\
+&D&
+}} & {\xymatrix{
+&A\ar[ld]_-{T}\ar[dd]^{F}&\\
+B\ar[rd]& &\\
+&C&
+}} & {\xymatrix{
+&A\ar[ld]_-{T}\ar[d]^{F}&\\
+exit&B\ar[d]&\\
+&C&
+}}\\
+\hline
+\end{tabular}
+
+对于这三种类型的分支，都可以将分支条件作为谓词，处理起来比较简单。
