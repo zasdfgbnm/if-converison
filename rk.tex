@@ -1,0 +1,46 @@
+\subsection{RK算法}
+
+CD函数并非是一个单值函数，不同的x可能对应相同的$CD\left(x\right)$。由于具有相同控制依赖的不同节点的执行条件相同，所以将节点转化为谓词执行以后，他们的谓词也应该相同，这样就可以为CD函数的值域中的每个元素分配一个与之一一对应的谓词p，谓词跟值域中元素的集合的对应关系记为K函数。显然，K函数是个单值函数，它的逆$K^{-1}$必然存在，记函数$R=CD\cdot K^{-1}$。可以看出，这么做将CD函数分解为R函数跟K函数：$CD=R\cdot K$。其中R函数负责将每个节点x与谓词p对应起来，而K则将每个谓词跟其对应的控制依赖对应起来。通过R函数，具有相同控制依赖（因而具有相同执行条件）的不同节点被映射到同一个谓词，也就是说，R函数为每个节点实现的谓词分配，节点x对应的谓词$p=R\left(x\right)$。至于K函数，则将每个谓词跟其控制依赖对应起来，这也为谓词的定义提供了参考。一种不错的谓词定义策略是，对于每一个谓词，在其对应的依赖，的相应节点末尾插入相应的赋值语句。例如$K\left(p\right)=\left\{y,-z\right\}$，则在y与z节点插入p的定义语句。插入的时候，如果对该点依赖值为正，则谓词的值就是分支条件，如果为赋，作为谓词的值就是该点分支条件的非。例如上面例子中，在y点插入$p=t_y$，而在z点插入$p=\neg t_z$。R函数以及K函数的计算算法如\fref{alg:ComputeRK}所示。
+
+\begin{algorithm}[H]
+	\label{alg:ComputeRK}
+	\caption{ComputeRK}
+	\KwIn{CD是控制依赖函数，N是G中节点的集合}
+	\KwOut{R函数以及K函数}
+	p = 1\tcc*{谓词命名从1开始顺序命名}
+	\For{$x\in N$}{
+		$t = CD\left(x\right)$\;
+		\eIf{$t\in K$}{
+			$R\left(x\right)=q$，其中q为使得$K\left(q\right)=t$的谓词\;
+		}{
+			$K\left(p\right)=t$\;
+			$R\left(x\right)=p++$\;
+		}
+	}
+\end{algorithm}
+计算好R函数以及K函数，并按照R函数跟K函数进行谓词分配与定义以后，只要对控制流图进行拓扑排序即可得到转换后的代码。if-conversion的算法如\fref{alg:ifcvt}。
+
+\begin{algorithm}[H]
+	\label{alg:ifcvt}
+	\caption{If-Conversion}
+	\KwIn{G是控制流图，N是G中节点的集合，E是G中边的集合}
+	\KwOut{转换后的代码}
+	计算CD函数\;
+	计算RK函数\;
+	\For{$x\in N$}{
+		$p=R\left(x\right)$\;
+		\If{$K\left(p\right)\neq\varnothing$}{
+			给x分配谓词$p$\;
+		}
+	}
+	\For{每个谓词p}{
+		\For{$\pm y\in K\left(p\right)$}{
+			若是$+y$则在y尾部插入$p=t_y$\;
+			若是$-y$则在y尾部插入$p=\neg t_y$;
+		}
+	}
+	对G进行拓扑排序，删掉分支语句，并对已分配谓词的基本块进行谓词化\;
+\end{algorithm}
+
+%例如，如下控制流图:
+%举个例子说明一下
