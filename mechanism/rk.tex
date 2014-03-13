@@ -42,5 +42,7 @@ CD函数并非是一个单值函数，不同的x可能对应相同的$CD\left(x\
 	对G进行拓扑排序，删掉分支语句，并对已分配谓词的基本块进行谓词化\;
 \end{algorithm}
 
-%例如，如下控制流图:
-%举个例子说明一下
+使用RK算法进行if-conversion的示例如下：
+如下控制流图，图中$B_i$为基本块名称，紧跟在名称后面的括号中的$t_i$表示该基本块末尾会按照条件$t_i$分支
+
+$\fbox{\parbox{4em}{\centering abcdefg \\ hijklmn}}^{B_1\left(t_1\right)}$
