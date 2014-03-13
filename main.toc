@@ -4,7 +4,7 @@
 \contentsline {section}{\numberline {2}if-conversion的运行机制}{3}{section.2}
 \contentsline {subsection}{\numberline {2.1}控制依赖}{3}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}RK算法}{4}{subsection.2.2}
-\contentsline {subsection}{\numberline {2.3}Hyperblock}{6}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.3}Hyperblock}{7}{subsection.2.3}
 \contentsline {subsection}{\numberline {2.4}逆向if-conversion}{9}{subsection.2.4}
 \contentsline {subsection}{\numberline {2.5}乱序处理器}{10}{subsection.2.5}
 \contentsline {section}{\numberline {3}if-conversion的执行策略}{10}{section.3}
