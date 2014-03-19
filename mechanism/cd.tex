@@ -23,7 +23,7 @@
 \begin{definition}[后支配节点树]
 直接后支配关系构成一个树，称为后支配节点树。树的节点为控制流图G中的节点，若$y\ipdom x$,则y是x的双亲节点。显然，求$ipdom\left(x\right)$即为求x在树中的双亲节点，求$pdom\left(x\right)$即为求x在树中的所有祖先节点的集合。
 \end{definition}
-计算图G的后支配节点树的算法见\fref{app:algo_ipdom_tree}
+计算图G的后支配节点树的算法见\cite{Lengauer1979}\cite{Harel1985}。
 
 \begin{definition}[控制依赖(control dependent)]
 设G为控制流图，X以及Y是图中节点，称Y控制依赖于X当且仅当：
@@ -42,7 +42,7 @@ CD函数的计算算法如\fref{alg:ComputeCD}
 \begin{algorithm}[H]
 	\label{alg:ComputeCD}
 	\caption{ComputeCD}
-	\KwIn{G是控制流图，N是G中节点的集合，E是G中边的集合}
+	\KwIn{控制流图$G\left(N,E,Start\right)$，其中N是G中节点的集合，E是G中边的集合}
 	\KwOut{CD函数}
 	计算函数$pdom\left(x\right)$以及$ipdom\left(x\right)$\;
 	\For{每个$\left[x,y,label\right]\in E$并且$y\notin pdom\left(x\right)$}{

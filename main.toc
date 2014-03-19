@@ -4,16 +4,15 @@
 \contentsline {section}{\numberline {2}if-conversion的运行机制}{3}{section.2}
 \contentsline {subsection}{\numberline {2.1}控制依赖}{3}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}RK算法}{4}{subsection.2.2}
-\contentsline {subsection}{\numberline {2.3}Hyperblock}{8}{subsection.2.3}
-\contentsline {subsection}{\numberline {2.4}逆向if-conversion}{11}{subsection.2.4}
-\contentsline {subsection}{\numberline {2.5}乱序处理器}{12}{subsection.2.5}
-\contentsline {section}{\numberline {3}if-conversion的执行策略}{12}{section.3}
-\contentsline {subsection}{\numberline {3.1}分支与性能的关系}{12}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}需要解决的两个问题}{13}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}静态平衡框架}{13}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}动态平衡框架}{15}{subsection.3.4}
-\contentsline {section}{\numberline {4}LLVM上if-conversion的实现}{15}{section.4}
-\contentsline {section}{\numberline {5}致谢}{15}{section.5}
-\contentsline {section}{{\CJKfamily {HEI}附录} \numberline {A}Allen的工作}{16}{{\CJKfamily {HEI}附录}.a.A}
-\contentsline {section}{{\CJKfamily {HEI}附录} \numberline {B}后支配节点树的计算}{24}{{\CJKfamily {HEI}附录}.a.B}
-\contentsline {section}{参考文献}{24}{{\CJKfamily {HEI}附录}.a.B}
+\contentsline {subsection}{\numberline {2.3}Hyperblock}{11}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}逆向if-conversion}{15}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}乱序处理器}{16}{subsection.2.5}
+\contentsline {section}{\numberline {3}if-conversion的执行策略}{16}{section.3}
+\contentsline {subsection}{\numberline {3.1}分支与性能的关系}{16}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}需要解决的两个问题}{17}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}静态平衡框架}{17}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}动态平衡框架}{19}{subsection.3.4}
+\contentsline {section}{\numberline {4}LLVM上if-conversion的实现}{19}{section.4}
+\contentsline {section}{\numberline {5}致谢}{19}{section.5}
+\contentsline {section}{{\CJKfamily {HEI}附录} \numberline {A}Allen的工作}{20}{{\CJKfamily {HEI}附录}.a.A}
+\contentsline {section}{参考文献}{28}{AlgoLine.8.6}
