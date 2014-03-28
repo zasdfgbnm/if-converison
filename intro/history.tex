@@ -12,7 +12,7 @@ if-conversion最早由Rice大学的Allen等人在1983年提出\cite{allen1983Con
 
 至此，Hyperblock概念已经提供了选择性地进行if-conversion的机制，并且RK算法已经告诉我们如何在选定Hyperblock以后产生最优代码。可以说，关于if-conversion的研究，剩下的只是策略的问题了。
 
-1993年，Warter等人提出了逆向if-conversion (reverse if-conversion)的概念\cite{Warter1993}。在这算是一个小插曲，因为作者的工作重心并不是if-conversion本身，而只是提出可以利用if-conversion来进行全局指令调度：首先通过if-conversion将分支消除，然后进行局部调度，最后再用作者提出来的逆向if-conversion算法将代码还原。单看工作本身，对if-conversion并没有大的贡献，而只是一个小小的应用，本来是不足以写进if-conversion的发展史的，但是由于逆向if-conversion的提出对后面的研究有着很大的启发作用，因此这篇文章还是对if-conversion有着深远影响的。
+1993年，Warter等人提出了逆向if-conversion (reverse if-conversion)的概念\cite{Warter1993}。在这算是一个小插曲，因为作者的工作重心并不是if-conversion本身，而只是提出可以利用if-conversion来进行全局指令调度：首先通过if-conversion将分支消除，然后进行局部调度，最后再用作者提出来的逆向if-conversion算法将代码还原。
 
 1997年，August等人对if-conversion策略进行了详细地讨论\cite{August1997}。August详细讨论了处理器对谓词执行的支持给编译器带来的挑战，Hyperblock选择等等问题，并且提出了一个平衡控制流跟谓词执行的框架：首先在编译过程的早期大量应用if-conversion来发掘谓词执行带来的全部好处，此时形成的Hyperblock比目标体系能处理的大得多，然后在比较靠后的编译阶段进行部分逆向if-conversion，根据目标机器调整每个Hyperblock的谓词化代码的数量，以平衡控制流跟谓词数目。
 
