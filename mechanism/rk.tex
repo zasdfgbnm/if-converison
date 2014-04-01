@@ -18,7 +18,8 @@ CD函数并非是一个单值函数，不同的x可能对应相同的$CD\left(x\
 		}
 	}
 \end{algorithm}
-计算好R函数以及K函数，并按照R函数跟K函数进行谓词分配与定义以后，只要对控制流图进行拓扑排序即可得到转换后的代码。但是此时的代码有一定的问题：存在谓词未被定义就被使用。造成这个问题的原因是因为，控制流图中的所有路径都被压缩到了一条路径上，这样就会导致某些分支的谓词未被定义。比如这样的控制流图:\\
+计算好R函数以及K函数，并按照R函数跟K函数进行谓词分配与定义以后，只要对控制流图进行拓扑排序即可得到转换后的代码。但是此时的代码有一定的问题：存在谓词未被定义就被使用。造成这个问题的原因是因为，控制流图中的所有路径都被压缩到了一条路径上，这样就会导致某些分支的谓词未被定义。
+\begin{wrapfigure}{l}{0pt}
 \xymatrix{
 						&*+[F]{Start}\ar[d]							\\
 						&*+[F]{A}\ar[ld]_{T}\ar[rd]^{F}					\\
@@ -26,10 +27,12 @@ CD函数并非是一个单值函数，不同的x可能对应相同的$CD\left(x\
 *+[F]{D}\ar[rd]				&						&*+[F]{E}\ar[ld]	\\
 						&*+[F]{F}\ar[d]								\\
 						&*+[F]{End}
-}\\
-D只对B有控制依赖，对A并没有控制依赖，因此D的谓词只会在B处被定义，但是如果在A处分支的到时候走的是false那一支，则B将不会被执行，也就是说D的谓词将不会被定义。
+}
+\caption{谓词未被定义的出现情况}\label{fig:pundef}
+\end{wrapfigure}
+比如\fref{fig:pundef}中，D只对B有控制依赖，对A并没有控制依赖，因此D的谓词只会在B处被定义，但是如果在A处分支的到时候走的是false那一支，则B将不会被执行，也就是说D的谓词将不会被定义。
 
-要解决这个问题最简单最直观的方法是在程序开始的地方将所有的谓词初始化为$false$，但是未被定义就被使用的谓词毕竟只是少数，这么做会引入很多不必要的浪费。聪明的做法是找到哪些谓词存在未被定义就被使用的问题。定义集合$A\left(x\right):=\left\{p\in P': \exists path\left(x,Stop\right)\text{使得}K\left(p\right)\cap path\left(x,Stop\right)=\varnothing\right\}$，其中$P'$为所有$K\left(p\right)\neq\varnothing$的谓词的集合，$path\left(x,Stop\right)$为从x到Stop的路径。显然，$A\left(Start\right)$就是应该在程序开始的时候初始化为$false$的谓词的集合。由于$A\left(x\right)$的计算比较麻烦，一种方便的做法是注意到所有满足$K\left(p\right)\cap\left\{\pm x\in E:x \pdom Head\right\}\neq\varnothing$（$Head$指的是Start的唯一直接后继）的谓词都不是$A\left(Start\right)$的成员，所以可以将所有不满足上述条件的谓词全部在程序的开头初始化为$false$，这样可以在浪费比较小的处理器资源的前提下省去计算$A\left(x\right)$的麻烦。
+要解决这个问题最简单最直观的方法是在程序开始的地方将所有的谓词初始化为$false$，但是未被定义就被使用的谓词毕竟只是少数，这么做会引入很多不必要的浪费。聪明的做法是找到哪些谓词存在未被定义就被使用的问题。定义集合$A\left(x\right):=\{p\in P': \exists path\left(x,Stop\right), \text{使得}K\left(p\right)\cap path\left(x,Stop\right)=\varnothing\}$，其中$P'$为所有$K\left(p\right)\neq\varnothing$的谓词的集合，$path\left(x,Stop\right)$为从x到Stop的路径。显然，$A\left(Start\right)$就是应该在程序开始的时候初始化为$false$的谓词的集合。由于$A\left(x\right)$的计算比较麻烦，一种方便的做法是注意到所有满足$K\left(p\right)\cap\left\{\pm x\in E:x \pdom Head\right\}\neq\varnothing$（$Head$指的是Start的唯一直接后继）的谓词都不是$A\left(Start\right)$的成员，所以可以将所有不满足上述条件的谓词全部在程序的开头初始化为$false$，这样可以在浪费比较小的处理器资源的前提下省去计算$A\left(x\right)$的麻烦。
 
 $A\left(x\right)$的计算是通过将其转化为定义使用链问题来实现的。将所有的基本块$B_x$抽象为一个点$x$，该点使用分配到$B_x$的谓词，并且定义由$K\left(p\right)$给出的对应谓词，即对于每个$b\in N$除了$Stop$，定义$Use\left(b\right)=\left\{p\in P':p=R\left(b\right)\right\}$，$Def\left(b\right)=\left\{p\in P':\pm b \in K\left(p\right)\right\}$，规定$Use\left(Stop\right)=P'$。这样的话通过解数据流方程
 \[
