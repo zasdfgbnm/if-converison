@@ -56,17 +56,57 @@ if-conversion会将程序中的分支删除，并为程序中的每个语句添�
 \begin{algorithm}[H]
 	\label{alg:ric}
 	\caption{RIC}
-	\KwIn{控制流图$G\left(N,E,Start\right)$，其中N是G中节点的集合，E是G中边的集合}
-	\KwOut{对每个谓词合并操作t，输出$jump\left(t\right)$以及$no\_jump\left(t\right)$}
-	\tcc{对于基本块X，记$P\left(X\right)$为X使用的谓词}
-	\For{$X\in N$}{
-		\For{$t\in RCD\left(X\right)$}{
-			\eIf{X不是t的直接后继，或者t在代码存放在X代码的正前方}{
-				$no\_jump\left(t\right)=no\_jump\left(t\right)\cup \left\{P\left(X\right)\right\}$\;
-			}{
-				$jump\left(t\right)=jump\left(t\right)\cup \left\{P\left(X\right)\right\}$\;
+	\KwIn{经过if-conversion之后的Hyperblock H}
+	\KwOut{重新生成控制流}
+	\tcc{对于基本块X，记$P\left(X\right)$为X使用的谓词，如果X不被谓词控制，则规定$P\left(X\right)=null$，并且规定$null\in\varnothing$}
+	创建根节点$root$\;
+	$L=\left\{root\right\}$\;
+	$\rho\left(root\right)=\varnothing$\;
+	\For{$op\in H$按顺序}{
+		\For{$X\in L$}{
+			\If{$op$为谓词定义操作}{
+				在$X$中插入条件分支操作\;
+				为$X$创建两个新的后继节点$Succ_t$以及$Succ_f$\;
+				$\rho\left(Succ_t\right)=\rho\left(X\right)\cup true\left(op\right)$\;
+				$\rho\left(Succ_f\right)=\rho\left(X\right)\cup false\left(op\right)$\;
+				$L=\left(L-X\right)\cup Succ_t \cup Succ_f$\;
+			}
+			\If{$op$为谓词合并操作}{
+				\For{$p\in\left[jump\left(op\right)\cup no\_jump\left(op\right)\right]$}{
+					$\rho_{new}\left(X\right)=\rho\left(X\right)-jump\left(op\right)-no\_jump\left(op\right)$\;
+					\If{$p\in\rho\left(X\right)$}{
+						\If{$p\in jump\left(op\right)$}{
+							在$X$中插入跳转语句\;
+						}
+						\For{$Y\in L$}{
+							\If{$\rho_{new}\left(X\right)\equiv\rho\left(Y\right)$}{
+								\eIf{$p\in jump\left(op\right)$}{
+									$Succ_t=Y$\;
+								}{
+									$Succ_f=Y$\;
+								}
+								$L=L-X$\;
+							}
+						}
+						\If{未找到后继}{
+							\eIf{$p\in jump\left(op\right)$}{
+								创建后继$Succ_t$\;
+								$\rho\left(Succ_f\right)=\rho_{new}\left(X\right)$\;
+								$L=\left(L-X\right)\cup Succ_t$\;
+							}{
+								创建后继$Succ_f$\;
+								$\rho\left(Succ_f\right)=\rho_{new}\left(X\right)$\;
+								$L=\left(L-X\right)\cup Succ_f$\;
+							}
+						}
+					}
+				}
+			}
+			\If{$op$为普通的谓词化执行语句}{
+				\If{$P\left(op\right)\in\rho\left(X\right)$}{\
+					将$op$插入到$X$中\;
+				}
 			}
 		}
 	}
 \end{algorithm}
-\includegraphics[width=0.9\linewidth]{mechanism/RIC}
